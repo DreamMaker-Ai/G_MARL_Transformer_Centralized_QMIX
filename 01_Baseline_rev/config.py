@@ -20,7 +20,7 @@ class Config:
         # Define simulation cond.
         self.show_each_episode_result = False  # mainly for debug
         self.draw_win_distributions = False  # mainly for debug
-        self.max_episodes_test_play = 50  # default=50 for training
+        self.max_episodes_test_play = 1000  # default=50 for training
 
         # Animation setting
         self.make_animation = False  # Use self.max_episodes_test_play=1
@@ -73,7 +73,7 @@ class Config:
         self.num_minibatchs = 30  # bach_sizeのminibatchの数/1 update_cycle of learner, default=30
         self.tau = 0.01  # Soft update of target network
         self.gamma = 0.96
-        self.max_steps = 150  # Default = 150 for training
+        self.max_steps = 200  # Default = 150 for training
 
         self.learning_rate = 5e-5  # Default = 1e-4
         self.loss_coef = 1.0  # Default = 1.0

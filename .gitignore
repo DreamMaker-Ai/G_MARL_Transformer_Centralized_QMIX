@@ -4,3 +4,37 @@
 01_Baseline_rev/models_architecture/
 
 01_Baseline_rev/test_trial/
+
+VDN vs QMIX finetuning history/
+
+VDN vs QMIX pretrining history/
+
+01_Baseline_rev/__pycache__/
+
+01_Baseline_rev/models/
+
+01_Baseline_rev/test_engagement/
+
+01_Baseline_rev/trial/
+
+02_FineTuning/__pycache__/
+
+02_FineTuning/models/
+
+02_FineTuning/Scenario_3_finetuning/
+
+02_FineTuning/scenario_test_after/
+
+02_FineTuning/scenario_test_before/
+
+02_FineTuning/test_engagement/
+
+03_Another_Implementation_with_Qpos/1_With_Q_pos/
+
+04_Another_Implementation_without_Qpos/__pycache__/
+
+04_Another_Implementation_without_Qpos/log/
+
+04_Another_Implementation_without_Qpos/test_engagement/
+
+04_Another_Implementation_without_Qpos/trial/

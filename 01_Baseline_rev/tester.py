@@ -747,12 +747,14 @@ def main():
 
     # Make dummy_policy and load learned weights
     dummy_policy = MarlTransformerModel(config=config)
+    dummy_hyper_mixing = HyperMixingNetwork(hidden_dim=config.hyper_mixing_hidden,
+                                            num_agents=config.max_num_red_agents)
 
     # Build model
     grid_size = config.grid_size
     ch = config.observation_channels
     n_frames = config.n_frames
-    max_num_agents = 10
+    max_num_agents = config.max_num_red_agents
 
     obs_shape = (grid_size, grid_size, ch * n_frames)
 
@@ -769,21 +771,27 @@ def main():
 
     mask = make_mask(alive_agents_ids, max_num_agents)  # (1,n)
 
-    dummy_policy(padded_obs, mask)
+    q, _, masked_features = dummy_policy(padded_obs, mask)  # build
+    dummy_hyper_mixing(masked_features, q[:, :, 0])
 
     # Load model
-    load_dir = Path(__file__).parent / 'models'
-    load_name = '/best_model/best_model'
+    load_dir = Path(__file__).parent / 'trial/models'
+    load_name = '/best_model/'
+    global_load_name = '/best_global_model/'
 
     dummy_policy.load_weights(str(load_dir) + load_name)
+    dummy_hyper_mixing.load_weights(str(load_dir) + global_load_name)
 
     weights = dummy_policy.get_weights()
+    global_weights = dummy_hyper_mixing.get_weights()
 
     # testerをインスタンス化
     tester = Tester.remote()
 
     # Start test process
-    wip_tester = tester.test_play.remote(current_weights=weights, epsilon=epsilon)
+    wip_tester = tester.test_play.remote(current_weights=weights,
+                                         epsilon=epsilon,
+                                         current_global_weights=global_weights)
 
     # Get results
     finished_tester, _ = ray.wait([wip_tester], num_returns=1)
